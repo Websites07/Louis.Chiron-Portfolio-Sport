@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Louis — Sites Web</title>
+<title>Louis — Photographie Sport</title>
 
 <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,6 +24,8 @@
       font-family: 'Helvetica Neue', Arial, sans-serif;
       font-weight: 300;
       overflow-x: hidden;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     /* ══ HEADER ══ */
@@ -62,7 +64,6 @@
       font-family: 'Georgia', 'Times New Roman', serif;
       transition: color 0.3s;
     }
-    body.menu-open .site-logo { color: var(--blanc); }
 
     /* Hamburger (right) */
     .burger-btn {
@@ -138,136 +139,189 @@
       color: var(--noir);
       opacity: 0; animation: up 0.9s 0.2s forwards;
     }
-    .page-title em { font-style: normal; font-weight: 300; color: var(--muted); }
+    .page-title .title-accent {
+      color: var(--noir);
+    }
     .header-right {
       text-align: right;
       opacity: 0; animation: up 0.9s 0.35s forwards;
     }
-    .header-count {
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 34px; font-weight: 700;
-      letter-spacing: -0.5px; line-height: 1;
-      text-transform: uppercase;
+    .header-name {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; font-weight: 400;
+      color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 4px;
     }
-    .header-count span { font-size: 13px; color: var(--muted); letter-spacing: 0.1em; font-weight: 400; }
-    .header-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 6px; }
+    .header-tagline { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
 
-    /* ══ SECTION WEB ══ */
-    .web-section {
-      padding: 72px 40px 80px;
-      max-width: 1200px; margin: 0 auto;
+    /* ══ NAV STICKY ══ */
+    .cat-nav {
+      position: sticky; top: 84px; z-index: 100;
+      background: var(--blanc); border-bottom: 1px solid var(--rule);
+      padding: 0 40px; display: flex; overflow-x: auto; scrollbar-width: none;
+      opacity: 0; animation: up 0.7s 0.45s forwards;
     }
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      flex-shrink: 0; padding: 15px 20px;
+      border: none; border-bottom: 2px solid transparent;
+      background: none; font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer;
+      transition: color 0.2s, border-color 0.2s; text-decoration: none;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .cat-tab:hover { color: var(--noir); }
+    .cat-tab.active { color: var(--noir); border-bottom-color: var(--noir); }
+    .cat-tab .cnt {
+      font-size: 9px; background: var(--soft); color: var(--muted);
+      padding: 2px 6px; border-radius: 20px;
+    }
+    .cat-tab.active .cnt { background: var(--noir); color: var(--blanc); }
 
-    /* ══ GRILLE PROJETS ══ */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-    }
+    /* ══ SECTION CATÉGORIE ══ */
+    .cat-section { padding: 56px 40px 0; }
+    .cat-section:last-of-type { padding-bottom: 72px; }
 
-    /* ══ CARTE PROJET ══ */
-    .project-card {
-      background: var(--blanc);
-      border: 1px solid var(--rule);
-      overflow: hidden;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      display: flex; flex-direction: column;
-    }
-    .project-card:hover {
-      border-color: rgba(17,17,17,0.25);
-      box-shadow: 0 12px 40px rgba(17,17,17,0.09);
-    }
-
-    /* Fenêtre navigateur simulée */
-    .browser-bar {
-      background: var(--soft);
+    .cat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; padding-bottom: 14px;
       border-bottom: 1px solid var(--rule);
-      padding: 10px 14px;
-      display: flex; align-items: center; gap: 10px;
-      flex-shrink: 0;
     }
-    .browser-dots { display: flex; gap: 5px; }
-    .browser-dots span {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: rgba(17,17,17,0.15);
+    .cat-title {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600;
+      font-size: 26px; letter-spacing: -0.2px; color: var(--noir);
     }
-    .browser-url {
-      flex: 1; background: rgba(17,17,17,0.06);
-      padding: 4px 10px; border-radius: 4px;
-      font-size: 10px; color: var(--muted); letter-spacing: 0.04em;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    .cat-icon { font-size: 20px; }
+    .cat-badge {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); padding: 5px 12px; border: 1px solid var(--rule);
     }
 
-    /* Preview screenshot */
-    .project-preview {
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
+    /* ══ GRILLE 3 colonnes, format 3:4 ══ */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    /* ══ CARTE PHOTO — PROTÉGÉE ══ */
+    .photo-card {
       position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
       background: var(--soft);
-      flex-shrink: 0;
+      cursor: pointer;
     }
-    .project-preview img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.8s cubic-bezier(0.76,0,0.24,1);
-      -webkit-user-drag: none; pointer-events: none;
+    .photo-card::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 10;
+      -webkit-user-drag: none;
     }
-    .project-card:hover .project-preview img { transform: scale(1.04); }
-
-    /* Overlay numéro */
-    .preview-num {
-      position: absolute; top: 12px; right: 14px;
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px;
-      color: rgba(255,255,255,0.6); letter-spacing: 0.15em;
+    .photo-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      transition: transform 0.7s cubic-bezier(0.76,0,0.24,1), filter 0.3s;
+      filter: saturate(0.88) brightness(0.98);
       pointer-events: none;
     }
+    .photo-card:hover .photo-bg {
+      transform: scale(1.06);
+      filter: saturate(1.05) brightness(1.02);
+    }
+    .photo-overlay {
+      position: absolute; inset: 0; z-index: 5;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 48%);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 16px 14px; pointer-events: none;
+    }
+    .photo-card:hover .photo-overlay { opacity: 1; }
+    .photo-meta {
+      transform: translateY(8px); opacity: 0;
+      transition: transform 0.3s 0.04s, opacity 0.3s 0.04s;
+    }
+    .photo-card:hover .photo-meta { transform: none; opacity: 1; }
+    .photo-num {
+      font-size: 9px; letter-spacing: 0.2em; color: rgba(255,255,255,0.55);
+      margin-bottom: 3px;
+    }
 
-    /* Infos bas de carte */
-    .project-info {
-      padding: 24px 24px 20px;
-      display: flex; flex-direction: column; gap: 10px;
-      flex: 1;
+    /* ══ SECTION PARTENAIRES ══ */
+    .partners-section {
+      background: var(--noir); padding: 72px 40px; margin-top: 56px;
     }
-    .project-info-top {
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    .partners-header { margin-bottom: 12px; }
+    .partners-eyebrow {
+      font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
     }
-    .project-name {
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 19px; font-weight: 600;
-      line-height: 1.25; letter-spacing: -0.2px;
+    .partners-eyebrow::before { content:''; width: 22px; height: 1px; background: currentColor; display:block; }
+    .partners-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 700;
+      font-size: clamp(32px, 4.2vw, 50px); letter-spacing: -0.5px; line-height: 1.05;
+      color: var(--blanc); margin-bottom: 12px;
     }
-    .project-tags { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
-    .tag {
-      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--muted); padding: 4px 9px; border: 1px solid var(--rule);
+    .partners-title em { font-style: normal; color: rgba(255,255,255,0.35); }
+    .partners-intro {
+      font-size: 13px; color: rgba(255,255,255,0.45);
+      letter-spacing: 0.05em; line-height: 1.8;
+      max-width: 600px; margin-bottom: 48px;
     }
-    .project-desc {
-      font-size: 13px; color: var(--muted); line-height: 1.75;
-      letter-spacing: 0.02em;
+    .partners-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 6px;
     }
-    .project-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--rule);
+    .partner-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4; background: rgba(255,255,255,0.06);
     }
-    .project-year { font-size: 10px; color: rgba(17,17,17,0.3); letter-spacing: 0.15em; }
-    .project-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      text-decoration: none;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--noir); padding: 9px 18px;
-      border: 1px solid var(--rule);
-      background: var(--blanc);
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    .partner-card::after {
+      content: ''; position: absolute; inset: 0; z-index: 10;
+      -webkit-user-drag: none;
     }
-    .project-btn:hover {
-      background: var(--noir); color: var(--blanc); border-color: var(--noir);
+    .partner-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center top;
+      background-repeat: no-repeat;
+      transition: transform 0.7s cubic-bezier(0.76,0,0.24,1);
+      filter: saturate(0.85) brightness(0.9);
+      pointer-events: none;
     }
-    .project-btn::after { content: '↗'; font-size: 13px; }
+    .partner-card:hover .partner-bg {
+      transform: scale(1.05);
+      filter: saturate(1) brightness(1);
+    }
+    .partner-caption {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 6;
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 100%);
+      padding: 28px 16px 14px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .partner-card:hover .partner-caption { opacity: 1; }
+    .partner-caption span {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; font-weight: 400;
+      color: #fff; letter-spacing: 0.02em;
+    }
 
-    /* ══ FOOTER ══ */
+    /* ══ FOOTER (conservé, non utilisé dans le HTML source) ══ */
     footer {
-      background: var(--noir); border-top: 1px solid rgba(255,255,255,0.06);
+      background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.06);
       padding: 32px 40px; display: flex; flex-direction: column;
-      align-items: center; gap: 14px;
+      align-items: center; gap: 16px;
     }
-    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; }
+    .footer-cartoon {
+      width: 80px; height: auto; opacity: 0.7;
+      filter: brightness(0) invert(1);
+      -webkit-user-drag: none; pointer-events: none;
+    }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; text-align: center; }
+
+    @media print {
+      .photo-bg, .partner-bg { background-image: none !important; background-color: #ccc !important; }
+    }
 
     @keyframes up {
       from { opacity: 0; transform: translateY(16px); }
@@ -275,11 +329,17 @@
     }
 
     /* ══ RESPONSIVE ══ */
-    @media (max-width: 860px) {
-      .projects-grid { grid-template-columns: 1fr; }
-      .page-header, .web-section { padding-left: 20px; padding-right: 20px; }
+    @media (max-width: 900px) {
+      .page-header, .cat-section { padding-left: 20px; padding-right: 20px; }
+      .cat-nav { padding: 0 20px; }
+      .partners-section { padding: 56px 20px; }
+      .partners-grid { grid-template-columns: repeat(3,1fr); }
       footer { padding: 24px 20px; }
       .site-header { padding: 0 16px; }
+    }
+    @media (max-width: 560px) {
+      .photo-grid { grid-template-columns: repeat(2,1fr); }
+      .partners-grid { grid-template-columns: repeat(2,1fr); }
     }
 </style>
 </head>
@@ -315,91 +375,306 @@
 <!-- HEADER -->
 <header class="page-header">
   <div>
-    <div class="header-eyebrow">Développement web</div>
-    <h1 class="page-title">Projets<br><em>&amp; Sites.</em></h1>
+    <div class="header-eyebrow">Galerie photographique</div>
+    <h1 class="page-title"><span class="title-accent">Mes</span><br><em>Photos de Sport.</em></h1>
   </div>
   <div class="header-right">
-    <div class="header-count">02 <span>Projets</span></div>
-    <div class="header-sub">HTML · CSS</div>
+
+    <div class="header-tagline">Football · Basketball · Rugby · Athlétisme</div>
   </div>
 </header>
 
-<!-- GRILLE PROJETS -->
-<section class="web-section">
-  <div class="projects-grid">
+<!-- NAV STICKY -->
+<nav class="cat-nav">
+  <a href="#football" class="cat-tab active" data-target="football">Football <span class="cnt">7</span></a>
+  <a href="#basketball" class="cat-tab" data-target="basketball">Basketball <span class="cnt">6</span></a>
+  <a href="#rugby" class="cat-tab" data-target="rugby">Rugby <span class="cnt">4</span></a>
+  <a href="#athletisme" class="cat-tab" data-target="athletisme">Athlétisme <span class="cnt">4</span></a>
+  <a href="#confiance" class="cat-tab" data-target="confiance">Ils m'ont fait confiance</a>
+</nav>
 
-    <!-- PROJET 1 -->
-    <div class="project-card">
-      <div class="browser-bar">
-        <div class="browser-dots"><span></span><span></span><span></span></div>
-        <div class="browser-url">websites07.github.io/Lucas-Louineau-Portfolio-Photographe-Automobile/</div>
-      </div>
-      <div class="project-preview">
-        <img src="https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/4a731cc5-b1ee-4a93-a42c-9cf32a86da50-img_0086_jpe?asset_id=fe383323-a33a-45e1-880b-1baabda7e3df&amp;img_etag=%22c8306432bbaa4ee29123df1d46f033a5%22&amp;image_assets=false&amp;size=1024" alt="Lucas Louineau — Photographe">
-        <div class="preview-num">01</div>
-      </div>
-      <div class="project-info">
-        <div class="project-info-top">
-          <div class="project-name">Lucas Louineau<br>Photographe</div>
-          <div class="project-tags">
-            <span class="tag">Vitrine</span>
-            <span class="tag"></span>
-          </div>
-        </div>
-        <p class="project-desc">
-          Site vitrine pour un photographe.
-        </p>
-        <div class="project-footer">
-          <span class="project-year">2026</span>
-          <a class="project-btn" href="https://websites07.github.io/Lucas-Louineau-Portfolio-Photographe-Automobile/" target="_blank" rel="noopener">Visiter</a>
-        </div>
-      </div>
+
+<!-- ══════════ BASKETBALL ══════════ -->
+<section class="cat-section" id="football">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Basketball</div>
+    <div class="cat-badge">7 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/5158d25a-1882-46aa-8209-102cee4e2245-img_0761_jpe?asset_id=1a63bd07-3d6b-4a11-a482-17edc91f322e&img_etag=%22f9c7edfcd8804fd0a845ec545e6b6e7f%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
     </div>
 
-   
-    <!-- PROJET 4 -->
-    <div class="project-card">
-      <div class="browser-bar">
-        <div class="browser-dots"><span></span><span></span><span></span></div>
-        <div class="browser-url">websites07.github.io/Louis.Chiron-Portfolio-Accueil/</div>
-      </div>
-      <div class="project-preview">
-        <img src="https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/af99aeee-a245-47a8-8f99-b52acfc178d8-img_7349_jpe?asset_id=c30b4c65-2e3a-476f-81af-80a729cfd595&amp;img_etag=%228b6b383bec06449fada49a0aabac7897%22&amp;image_assets=false&amp;size=2560" alt="Portfolio Personnel — Louis Chiron">
-        <div class="preview-num">02</div>
-      </div>
-      <div class="project-info">
-        <div class="project-info-top">
-          <div class="project-name">Portfolio <br>Louis Chiron</div>
-          <div class="project-tags">
-            <span class="tag">Portfolio</span>
-            <span class="tag">Créatif</span>
-          </div>
-        </div>
-        <p class="project-desc">
-          Portfolio regroupant l'ensemble de mes travaux — photographie, et développement web. Conçu en language HTML/CSS.
-        </p>
-        <div class="project-footer">
-          <span class="project-year">2026</span>
-          <a class="project-btn" href="https://websites07.github.io/Louis.Chiron-Portfolio-Accueil/" target="_blank" rel="noopener">Visiter</a>
-        </div>
-      </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/e4448245-c055-4331-a087-2614f5647cee-img_0762_jpe?asset_id=602a9bb7-c3e2-472c-b03b-b770a85384f8&img_etag=%224d37ecb70ccb4734a096f6ab1d71ccd8%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/1208a736-e9ff-412f-8016-fab218d55763-img_0767_jpe?asset_id=3cb5c5d3-14aa-4546-bd28-c3dd35d787e0&img_etag=%22880eaf11213c4704b9d55e6bb08c6dd7%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/ac249b11-610d-4535-b222-f7baed2160fb-img_0768_jpe?asset_id=7075df50-d254-4541-8be7-093b4879242d&img_etag=%22e870047740e34cc7a8bf6fc7f3ddf100%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/03facccd-73b9-4321-8640-61100f77d0f9-img_0779_jpe?asset_id=0c676e59-ab48-4586-8934-499a31d8a424&img_etag=%2296026de68f654c53b2597c4a3224ca1b%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/9dc4df11-5e17-44e4-a009-3f3881bc1734-img_0780_jpe?asset_id=42e889b4-345b-4ba5-96bf-49193bc236c4&img_etag=%22c0b62ec07da24b319d843cf217c7bdc3%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/cc9d59b3-d79c-4a7b-a976-102a70d58b85-img_0783_jpe?asset_id=ec45c927-f549-401a-bc46-83f98d1dc66b&img_etag=%22dfe4ac806dff4633bc6196e9966cab24%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/864bded1-6b12-4737-be40-4a23a4b68b4b-57d7c751_b90?asset_id=6e77aa95-ab4c-4f34-aff6-51315453caa8&img_etag=%223e95442f426e45da89df15df27931360%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/0e8a46c3-94a2-4b83-ab48-87d39ed38b67-405377c6_592?asset_id=02d817db-913e-4737-8240-90a5ed345759&img_etag=%22d07595af12a34125a00f9d3befdee3f9%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/a75256a4-d1c3-4bbe-9087-63a1e5e9a6d0-dsc_4926_jpe?asset_id=804b763f-4f8f-4a42-b88b-d06009f250e5&img_etag=%22e9c3e3b0932243f8a7537409d12a3bdc%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/214b627c-7c49-4b32-b606-56815829494b-dsc_4864_jpe?asset_id=bc803f35-0cf3-406c-b253-3c80ae1563d3&img_etag=%22246f4a3ae9bc443db75ebf332cf39071%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/a2eafa5d-3e95-4fb9-83a6-f239d5f33db1-dsc_5027_jpe?asset_id=ead93375-f3ad-41fd-a364-1ff1ad95e83d&img_etag=%2284ee444372c6433ba5a7a3af838cbc1b%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/24accaa1-b562-49cc-94c3-89ec544e652b-dsc_4844_jpe?asset_id=f3e1308a-a424-4095-bde0-c1145617ad5d&img_etag=%2215ef357ac1cd4809884e51bf4391709c%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/81b5f929-f7fc-40b7-a671-4082a2a845f0-dsc_4859_jpe?asset_id=50fb8bd6-a08f-4871-8abe-35758154a8e1&img_etag=%22ddaedabd3a0340d29cdbd4a3e7b68ec6%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/01e4cef5-582d-4bf8-9ead-71081a68e2fd-img_0786_jpe?asset_id=8f90bff3-f3cd-44b5-86df-cc2f610ca494&img_etag=%22427c14b59eef4253bca820298b6f3290%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/ubBoak0mqhdLQ/resources/d811d51b-d788-4230-993f-1792de78ee93-dsc_4765_jpe?asset_id=05995e0c-2951-4765-9f37-ce624ea8f351&img_etag=%2232dc1cc393ed4046a452dfde7a5b5e00%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    
+
+  </div>
+</section>
+
+
+
+<!-- ══════════ CYCLISME ══════════ -->
+<section class="cat-section" id="rugby">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Cyclisme</div>
+    <div class="cat-badge">4 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/2b156a24-50ab-480a-9d82-c58e1fd11e0f-dsc_0538_jpe?asset_id=a65b97bf-87d3-4647-bc10-dbf25b3c4efb&img_etag=%22baf74df533ef44989b18a9003c5bee74%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/4e945af7-5736-441e-83b8-0d67b35ea464-dsc_0546_jpe?asset_id=34d4e195-31ff-49c8-b6ec-594c789a06dc&img_etag=%22071661ca07a04638b394df21e158eb8a%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/134f761c-52d1-4dcf-a728-dfcd2b42f835-dsc_0542_jpe?asset_id=7f08ce70-edf1-4968-8d28-acb7592bdc80&img_etag=%228c3c171336504bbb933206c796785439%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/f0bfb610-0fd3-4b53-8f50-97f3afa80df6-dsc_0239_jpe?asset_id=e6e8609f-8dfc-4c68-b862-4c02a2ac2872&img_etag=%220e74ea2eb9f64360a9a85ecd8181b305%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/75206eb9-f6fd-49a5-8906-cfdcc9b835c8-dsc_0322_jpe?asset_id=150580d3-df04-4981-988f-a02fabdef7fc&img_etag=%22583b63dada1f41d9aff4ea9b21df8569%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/e8a9804f-ef16-4b78-8396-a4cf9e51cf21-img_0967_jpe?asset_id=5792554f-5863-4ecb-a719-36d21036fd05&img_etag=%2210affaf043414a479b550f11441e6705%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
     </div>
 
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <p class="footer-copy">© 2026 Louis Chiron — Tous droits réservés</p>
-</footer>
+
+<!-- ══════════ MMA ══════════ -->
+<section class="cat-section" id="rugby">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> MMA</div>
+    <div class="cat-badge">4 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/77e2564b-6845-4eb9-be4a-b102f780e938-dsc_5689_jpe?asset_id=86668f66-80be-46c3-baee-44d12a52f672&img_etag=%2265d9451f395349f790c71c6f72c20276%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/7093e83a-aa30-45ce-8dd7-fe5c921f22dc-dsc_5708_jpe?asset_id=2f954e1b-f04f-47b8-8d18-2ebe41d9773f&img_etag=%228e69959ede2544748c27b7ba5b0872b7%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/7c84978b-4fba-4c19-9b3d-f7bd45ff58d1-dsc_5770_jpe?asset_id=8f4e7d4d-1304-41ca-a771-b18496e095b6&img_etag=%22b1f1ec3e9989492d8888e5f291bbd885%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/995b48d0-fd8f-4d73-81de-3d094943fb6b-dsc_5718_jpe?asset_id=81e21d6b-2b03-40d3-854d-78d2135db7e9&img_etag=%221d0c7d5407f04dd49d2a8c9fb75e5a23%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+      <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/60e7d950-6c9b-4d5c-b7b4-9f032d330a79-dsc_5701_jpe?asset_id=e67b5191-3df6-48d5-95a0-a692bf1969e1&img_etag=%2266decedb225145859f3af3c48ac3cceb%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('https://new.express.adobe.com/webpage/2SzPWQy4IAbXG/resources/bbad0515-6059-49ef-8a49-55be9f7fd011-dsc_5685_jpe?asset_id=006baf10-3b86-4c38-9b43-9a8d67607e2f&img_etag=%220df2f1f9449e407589c2dc6a1f8a5493%22&image_assets=false&size=1024')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+    
+
+  </div>
+</section>
+
+
+
+<!-- ══════════ Athletisme ══════════ -->
+<section class="cat-section" id="basketball">
+  <div class="cat-header">
+    <div class="cat-title"><span class="cat-icon"></span> Athletisme</div>
+    <div class="cat-badge">6 photos</div>
+  </div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+     <div class="photo-card">
+      <div class="photo-bg" style="background-image:url('')"></div>
+      <div class="photo-overlay"><div class="photo-meta"><div class="photo-num">001</div></div></div>
+    </div>
+
+   
+
+  </div>
+</section>
 
 <script>
+  /* ── Burger ── */
   document.getElementById('burgerBtn').addEventListener('click', () =>
     document.body.classList.toggle('menu-open')
   );
   document.querySelectorAll('.nav-link').forEach(a =>
     a.addEventListener('click', () => document.body.classList.remove('menu-open'))
   );
+
+  /* ── Nav sticky active au scroll ── */
+  const ids = ['football','basketball','rugby','athletisme','confiance'];
+  const tabs = document.querySelectorAll('.cat-tab[data-target]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.target === e.target.id));
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+  tabs.forEach(tab => {
+    tab.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.getElementById(tab.dataset.target);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ── Protection photos ── */
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || e.key === 'PrintScreen' ||
+        (e.ctrlKey && ['s','u','p'].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())))
+      e.preventDefault();
+  });
+  document.addEventListener('selectstart', e => e.preventDefault());
+  document.querySelectorAll('.photo-card,.partner-card').forEach(c => {
+    c.addEventListener('dragstart', e => e.preventDefault());
+  });
+
 </script>
 
 </body>
